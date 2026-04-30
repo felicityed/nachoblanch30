@@ -145,7 +145,7 @@ async def create_rsvp(payload: RSVPCreate):
 </html>"""
             resend.Emails.send({
                 "from": "noreply@nachoblanch30.com",
-                "to": payload.email,
+                "to": [payload.email],
                 "subject": "¡Nos vemos el 5 de Septiembre! 🎉",
                 "html": html_body,
             })
