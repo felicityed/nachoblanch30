@@ -13,7 +13,7 @@ export default function ParallaxWord({ text, speed = 80, direction = 1 }) {
   return (
     <div
       ref={ref}
-      className="relative overflow-hidden py-12 sm:py-20 select-none"
+      className="relative overflow-hidden py-12 sm:py-20 select-none z-[3]"
       aria-hidden
     >
       <motion.p

@@ -92,6 +92,9 @@ body {
 ::-webkit-scrollbar-thumb { background: rgba(201,169,97,0.25); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(201,169,97,0.45); }
 
+/* Ensure sections render above fixed background animations (fireworks, confetti) */
+section, footer { position: relative; z-index: 3; }
+
 /* Shadcn tokens — dark midnight theme */
 @layer base {
   :root {

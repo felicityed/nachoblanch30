@@ -5,9 +5,9 @@ import {
   MapPin,
   Clock,
   CalendarDays,
-  Martini,
+  Beer,
+  UtensilsCrossed,
   Music2,
-  Camera,
   Sparkles,
   ArrowRight,
   Heart,
@@ -21,6 +21,8 @@ import FloatingCTA from "../components/FloatingCTA";
 import Countdown from "../components/Countdown";
 import { Reveal, RevealX, RevealZoom } from "../components/Reveal";
 import ParallaxWord from "../components/ParallaxWord";
+import Fireworks from "../components/Fireworks";
+import Confetti from "../components/Confetti";
 
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -37,8 +39,8 @@ import { Label } from "../components/ui/label";
 // ---------- HERO ----------
 function Hero() {
   const { scrollY } = useScroll();
-  const imgY = useTransform(scrollY, [0, 800], [0, 200]);
-  const imgScale = useTransform(scrollY, [0, 800], [1.05, 1.2]);
+  const bgY = useTransform(scrollY, [0, 800], [0, 180]);
+  const bgScale = useTransform(scrollY, [0, 800], [1, 1.12]);
   const titleY = useTransform(scrollY, [0, 600], [0, -80]);
   const titleOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
@@ -47,36 +49,66 @@ function Hero() {
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden px-6"
       data-testid="hero-section"
     >
-      {/* Background image with parallax + heavy overlay */}
+      {/* Animated gradient mesh background — no photo */}
       <motion.div
-        style={{ y: imgY, scale: imgScale }}
+        style={{ y: bgY, scale: bgScale }}
         className="absolute inset-0 -z-0"
       >
-        <img
-          src={EVENT.heroImage}
-          alt=""
-          className="w-full h-full object-cover"
-          style={{ filter: "brightness(0.55) saturate(0.9) contrast(1.05)" }}
-        />
+        {/* base radial */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(10,14,39,0.55) 0%, rgba(10,14,39,0.85) 60%, rgba(10,14,39,1) 100%)",
+              "radial-gradient(ellipse 120% 80% at 50% 40%, #181f52 0%, #0d1334 45%, #0a0e27 75%, #060823 100%)",
           }}
         />
+        {/* large drifting gold orb behind the 30 */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            width: 820,
+            height: 820,
+            background:
+              "radial-gradient(circle, rgba(201,169,97,0.22) 0%, rgba(201,169,97,0.08) 30%, transparent 60%)",
+            filter: "blur(20px)",
+          }}
+          animate={{ scale: [1, 1.08, 1], opacity: [0.8, 1, 0.8] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* purple accent orb */}
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            width: 520, height: 520, left: "10%", top: "10%",
+            background: "radial-gradient(circle, rgba(132,92,180,0.14) 0%, transparent 65%)",
+            filter: "blur(30px)",
+          }}
+          animate={{ x: [0, 60, -20, 0], y: [0, -30, 20, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute rounded-full"
+          style={{
+            width: 480, height: 480, right: "8%", bottom: "12%",
+            background: "radial-gradient(circle, rgba(90,120,200,0.14) 0%, transparent 65%)",
+            filter: "blur(30px)",
+          }}
+          animate={{ x: [0, -40, 30, 0], y: [0, 30, -20, 0] }}
+          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* vignette */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 50% at 50% 30%, rgba(201,169,97,0.10) 0%, transparent 60%)",
+              "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, rgba(10,14,39,0.55) 85%, rgba(10,14,39,1) 100%)",
           }}
         />
       </motion.div>
 
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}
-        className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto pt-24 pb-16"
+        className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto pt-20 pb-16"
       >
         {/* Overline */}
         <motion.p
@@ -100,45 +132,98 @@ function Hero() {
           {EVENT.name}
         </motion.h1>
 
-        {/* Giant 30 with hairlines */}
+        {/* Giant 30 with decorative rings */}
         <motion.div
-          className="flex items-center justify-center gap-6 sm:gap-10 my-6 sm:my-10"
-          initial={{ opacity: 0, scale: 0.9 }}
+          className="relative my-6 sm:my-10 flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
         >
-          <div
-            className="h-px flex-1 max-w-[120px]"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(201,169,97,0.8), rgba(201,169,97,0.2))" }}
-          />
-          <span
-            className="font-serif-display"
+          {/* rotating outer ring */}
+          <motion.div
+            aria-hidden
+            className="absolute rounded-full"
             style={{
-              fontSize: "clamp(140px, 28vw, 240px)",
+              width: "min(86vw, 440px)",
+              height: "min(86vw, 440px)",
+              border: "1px solid rgba(201,169,97,0.18)",
+            }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          >
+            <span
+              className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
+              style={{ background: "#d4b572", boxShadow: "0 0 14px #c9a961" }}
+            />
+          </motion.div>
+          {/* inner ring */}
+          <motion.div
+            aria-hidden
+            className="absolute rounded-full"
+            style={{
+              width: "min(70vw, 360px)",
+              height: "min(70vw, 360px)",
+              border: "1px solid rgba(201,169,97,0.1)",
+            }}
+            animate={{ rotate: -360 }}
+            transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+          />
+          {/* hairlines L/R */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 flex items-center gap-6 sm:gap-10"
+            style={{ width: "min(96vw, 720px)" }}
+          >
+            <div
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(201,169,97,0.75), transparent)",
+              }}
+            />
+            <div style={{ width: "min(58vw, 280px)" }} />
+            <div
+              className="h-px flex-1"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(201,169,97,0.75), transparent)",
+              }}
+            />
+          </div>
+          {/* The 30 — stronger contrast, pulse glow */}
+          <motion.span
+            className="font-serif-display relative"
+            animate={{
+              textShadow: [
+                "0 0 60px rgba(201,169,97,0.5), 0 0 120px rgba(201,169,97,0.25)",
+                "0 0 80px rgba(201,169,97,0.7), 0 0 160px rgba(201,169,97,0.35)",
+                "0 0 60px rgba(201,169,97,0.5), 0 0 120px rgba(201,169,97,0.25)",
+              ],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            style={{
+              fontSize: "clamp(170px, 32vw, 280px)",
               lineHeight: 0.85,
               background:
-                "linear-gradient(180deg, #f4e4b8 0%, #d4b572 40%, #c9a961 70%, #a88840 100%)",
+                "linear-gradient(180deg, #fff4c9 0%, #f4e4b8 25%, #d4b572 55%, #c9a961 80%, #a88840 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               color: "transparent",
-              textShadow: "0 0 80px rgba(201,169,97,0.25)",
-              fontWeight: 300,
+              fontWeight: 400,
+              letterSpacing: "-0.03em",
+              paddingTop: "0.05em",
+              paddingBottom: "0.08em",
             }}
             data-testid="hero-age"
           >
             30
-          </span>
-          <div
-            className="h-px flex-1 max-w-[120px]"
-            style={{ background: "linear-gradient(90deg, rgba(201,169,97,0.2), rgba(201,169,97,0.8), transparent)" }}
-          />
+          </motion.span>
         </motion.div>
 
         {/* Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.65 }}
+          transition={{ duration: 1, delay: 0.75 }}
           className="font-serif-display italic text-[20px] sm:text-[26px] max-w-xl"
           style={{ color: "var(--ivory-2)" }}
         >
@@ -149,7 +234,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          transition={{ duration: 1, delay: 0.9 }}
           className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-10"
         >
           <EventPill icon={<CalendarDays size={14} />} label="Fecha" value="5 · Sep · 2026" />
@@ -161,7 +246,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
+          transition={{ duration: 1, delay: 1.05 }}
           className="mt-12 sm:mt-16"
         >
           <Countdown dateISO={EVENT.dateISO} />
@@ -207,9 +292,9 @@ function EventPill({ icon, label, value }) {
 // ---------- ABOUT ----------
 function About() {
   const cards = [
-    { icon: <Martini size={28} strokeWidth={1.2} />, label: "Cocktails", value: "Barra libre" },
+    { icon: <Beer size={28} strokeWidth={1.2} />, label: "Bebida", value: "Cerveza & vinos" },
+    { icon: <UtensilsCrossed size={28} strokeWidth={1.2} />, label: "Comida", value: "Mejor imposible" },
     { icon: <Music2 size={28} strokeWidth={1.2} />, label: "Música", value: "DJ en vivo" },
-    { icon: <Camera size={28} strokeWidth={1.2} />, label: "Recuerdos", value: "Photocall" },
   ];
   return (
     <section className="relative py-28 sm:py-40 px-6" id="celebracion">
@@ -217,14 +302,13 @@ function About() {
         <Reveal>
           <p className="eyebrow mb-5">La Celebración</p>
           <h2 className="font-serif-display text-[34px] sm:text-[54px] leading-[1.05] tracking-tight">
-            Una noche <span className="italic" style={{ color: "#d4b572" }}>íntima</span><br className="hidden sm:block" /> que no olvidarás
+            Una noche <span className="italic" style={{ color: "#d4b572" }}>íntima</span><br className="hidden sm:block" /> que no olvidaremos
           </h2>
           <div className="hairline w-16 mx-auto my-9" />
           <p className="font-sans-body text-[15px] sm:text-[17px] leading-[1.9] max-w-xl mx-auto text-[var(--ivory-2)]">
-            Treinta años no se cumplen todos los días. Quiero celebrarlo con las personas que importan,
-            en un sitio que esté a la altura.{" "}
+            Treinta años no se cumplen todos los días. Quiero celebrarlo contigo; con la gente que más me importa. Y lo vamos a celebrar por todo lo alto:{" "}
             <span className="font-serif-display italic text-[17px] sm:text-[21px] text-[var(--ivory)]">
-              Cocktails, buena música y la mejor compañía.
+              cocktails, buena música, mejor comida y la compañía inmejorable.
             </span>
           </p>
         </Reveal>
@@ -353,14 +437,14 @@ function DressCode() {
             <DressCard
               tag="Ellos"
               title="Caballeros"
-              body="Traje o blazer con pantalón de vestir. Camisa — con o sin corbata, como prefieras. Zapato cerrado. Colores oscuros o neutros."
+              body="Traje o blazer con pantalón de vestir. Zapato de vestir."
             />
           </RevealX>
           <RevealX dir="right" delay={0.2}>
             <DressCard
               tag="Ellas"
               title="Damas"
-              body="Vestido cocktail, midi o largo. Conjunto de fiesta. Tacones o sandalia elegante. Complementos al gusto."
+              body="Vestido cocktail, midi o largo. Conjunto de fiesta. Tacones o sandalia elegante."
             />
           </RevealX>
         </div>
@@ -856,6 +940,8 @@ export default function Landing() {
   return (
     <div className="relative grain min-h-screen">
       <LightOrbs />
+      <Fireworks density={1} />
+      <Confetti count={38} />
       <FloatingCTA targetId="rsvp" />
       <Hero />
       <ParallaxWord text="Celebra" speed={120} direction={1} />
