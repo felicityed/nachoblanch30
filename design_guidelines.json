@@ -1,0 +1,140 @@
+{
+  "theme": "dark",
+  "archetype": "5 (Jewel & Luxury)",
+  "colors": {
+    "background": {
+      "default": "#0A0E27",
+      "surface": "#0D1334",
+      "glass": "rgba(13, 19, 52, 0.65)"
+    },
+    "text": {
+      "primary": "#FDFBF7",
+      "secondary": "#EAE5D9",
+      "muted": "#8A94A6"
+    },
+    "accent": {
+      "gold": "#C9A961",
+      "gold_light": "#D4B572",
+      "gold_dark": "#A88840",
+      "glow": "rgba(201, 169, 97, 0.15)"
+    }
+  },
+  "typography": {
+    "headings": {
+      "fontFamily": "Cormorant Garamond, serif",
+      "weights": ["300", "400", "600"],
+      "h1": "text-5xl sm:text-6xl+ tracking-tighter leading-none font-light",
+      "h2": "text-3xl sm:text-4xl tracking-tight leading-tight",
+      "h3": "text-2xl sm:text-3xl tracking-tight",
+      "label": "text-xs sm:text-sm uppercase tracking-[0.2em] font-sans text-[#C9A961]"
+    },
+    "body": {
+      "fontFamily": "Outfit, sans-serif",
+      "weights": ["300", "400"],
+      "base": "text-base leading-relaxed font-light"
+    }
+  },
+  "layout": {
+    "spacing": {
+      "section_y": "py-24 sm:py-32",
+      "container_x": "px-6 sm:px-12 lg:px-24"
+    },
+    "components": {
+      "card": "bg-[#0D1334]/50 backdrop-blur-md border border-white/5 rounded-2xl p-8 hover:border-[#C9A961]/30 transition-colors duration-500",
+      "glass_panel": "bg-[#0A0E27]/70 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+      "button_primary": "bg-gradient-to-r from-[#C9A961] to-[#D4B572] text-[#0A0E27] px-8 py-4 rounded-full font-medium tracking-wide hover:shadow-[0_0_20px_rgba(201,169,97,0.4)] transition-all duration-300 transform hover:-translate-y-1"
+    }
+  },
+  "motion": {
+    "reveal": {
+      "initial": { "opacity": 0, "y": 30 },
+      "whileInView": { "opacity": 1, "y": 0 },
+      "viewport": { "once": true, "margin": "-100px" },
+      "transition": { "duration": 0.8, "ease": [0.25, 1, 0.5, 1] }
+    },
+    "parallax": {
+      "strategy": "framer-motion useScroll and useTransform for y-axis translation on background images and text."
+    },
+    "background_effects": "Subtle drifting light orbs using fixed framer-motion divs with radial gradients. NO confetti, NO fireworks."
+  },
+  "sections": [
+    {
+      "name": "Hero",
+      "elements": [
+        "100vh height",
+        "Background image (Hero Placeholder) with linear gradient overlay (bg-gradient-to-b from-[#0A0E27]/30 via-[#0A0E27]/70 to-[#0A0E27])",
+        "Content: Giant '30', 'Nacho Blanch', Event Date, Venue, Live Countdown",
+        "Floating 'Confirmar Asistencia' CTA begins here or is fixed at bottom right"
+      ]
+    },
+    {
+      "name": "About / Celebration",
+      "elements": [
+        "Bento grid layout for features",
+        "Cards: Cocktails, Música, Photocall",
+        "Use Lucide icons (GlassWater/Martini, Music, Camera)",
+        "Background: Champagne bokeh image with heavy opacity overlay"
+      ]
+    },
+    {
+      "name": "Venue & Dress Code",
+      "elements": [
+        "Venue map container with Dark marble texture overlay",
+        "Address block: Paseo de la Castellana, 134",
+        "Dress code section (Elegante / Cocktail) with elegant cocktail party night image"
+      ]
+    },
+    {
+      "name": "RSVP (Atomic)",
+      "elements": [
+        "Glassmorphism container",
+        "Form fields: Yes/No to attend (branching), Name, Email, Phone, +1, Dietary restrictions, Song request, Message",
+        "Shadcn Input, Select, Textarea, Checkbox customized for dark theme with gold focus borders",
+        "Success state message upon submission"
+      ]
+    },
+    {
+      "name": "Admin Panel",
+      "route": "/admin",
+      "elements": [
+        "Minimalist dashboard view",
+        "Shadcn Table showing mock RSVP submissions (Name, Status, +1, Dietary, Song)"
+      ]
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "category": "hero_placeholder",
+        "url": "https://images.unsplash.com/photo-1700940994953-45a022ccd8bf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwbWFuJTIwdHV4ZWRvJTIwbmlnaHR8ZW58MHx8fHwxNzc3NTUyODAxfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Elegant man in tuxedo, placeholder for Nacho hero cover"
+      },
+      {
+        "category": "celebration_bg",
+        "url": "https://images.pexels.com/photos/15007573/pexels-photo-15007573.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Champagne bokeh dark"
+      },
+      {
+        "category": "venue_texture",
+        "url": "https://images.pexels.com/photos/450055/pexels-photo-450055.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Dark marble texture for venue background"
+      },
+      {
+        "category": "dress_code",
+        "url": "https://images.unsplash.com/photo-1774543239879-8a09ab5ad616?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxjb2NrdGFpbCUyMHBhcnR5JTIwbmlnaHQlMjBlbGVnYW50fGVufDB8fHx8MTc3NzU1Mjc4N3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Elegant cocktail party night"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the color palette. Stick to Midnight Blue (#0A0E27) and Gold (#C9A961).",
+    "Use framer-motion for smooth scroll reveals and parallax elements. Make sure to stagger children in grids.",
+    "Implement the floating 'Confirmar Asistencia' CTA that stays visible and scrolls along. It should jump/scroll to the RSVP section.",
+    "Custom dark-theme Shadcn forms: Ensure form fields have readable text, dark backgrounds, and gold focus rings.",
+    "Ensure the hero overlay has a strong gradient so the text is crisp and readable.",
+    "Include a React-based countdown timer in the hero.",
+    "Ensure all interactive elements have data-testid attributes.",
+    "NO EMOJIS anywhere. Use lucide-react exclusively.",
+    "Ensure there is a /admin route displaying a simple Shadcn table for the RSVPs."
+  ]
+}
