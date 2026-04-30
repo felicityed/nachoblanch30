@@ -384,7 +384,7 @@ function Venue() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 max-w-3xl mx-auto">
           <RevealX dir="left" delay={0.1}>
-            <div className="p-8 text-center sm:text-left">
+            <div className="p-8 text-center">
               <p className="eyebrow mb-3">Dirección</p>
               <p className="font-serif-display text-[22px] text-[var(--ivory)] leading-snug">
                 {EVENT.venueAddress}
@@ -394,7 +394,7 @@ function Venue() {
             </div>
           </RevealX>
           <RevealX dir="right" delay={0.2}>
-            <div className="p-8 text-center sm:text-left">
+            <div className="p-8 text-center">
               <p className="eyebrow mb-3">Cómo llegar</p>
               <p className="font-sans-body text-[14px] leading-[1.9] text-[var(--ivory-2)]">
                 {EVENT.metro}
