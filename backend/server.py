@@ -9,10 +9,13 @@ from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
+import resend
 
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+resend.api_key = os.environ.get('RESEND_API_KEY', '')
 
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
@@ -74,6 +77,81 @@ async def create_rsvp(payload: RSVPCreate):
     rsvp = RSVP(**payload.model_dump())
     doc = rsvp.model_dump()
     await db.rsvps.insert_one(doc)
+
+    if payload.attendance == "yes" and payload.email:
+        try:
+            html_body = f"""
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#0a0c1a;font-family:Georgia,serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0c1a;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#0d1334;border:1px solid #c9a961;border-radius:8px;overflow:hidden;">
+
+        <tr>
+          <td style="background-color:#0a0c1a;padding:40px 40px 20px;text-align:center;border-bottom:1px solid #c9a961;">
+            <p style="margin:0;font-size:28px;color:#c9a961;letter-spacing:6px;text-transform:uppercase;">Nacho · 30</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:40px 40px 20px;text-align:center;">
+            <p style="font-size:32px;margin:0 0 24px;">🥂</p>
+            <p style="color:#fdfbf7;font-size:18px;line-height:1.7;margin:0 0 16px;">
+              ¡Gracias por confirmar, <strong style="color:#c9a961;">{payload.firstName}</strong>!
+            </p>
+            <p style="color:#c8c0b0;font-size:16px;line-height:1.8;margin:0 0 32px;">
+              Cuento contigo para celebrar mis 30.<br>
+              Nos vemos el <strong style="color:#fdfbf7;">sábado 5 de septiembre a las 20:30h</strong><br>
+              en <strong style="color:#fdfbf7;">Casa Madrid</strong>.
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:0 40px 32px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0c1a;border:1px solid rgba(201,169,97,0.3);border-radius:6px;">
+              <tr>
+                <td style="padding:24px 28px;">
+                  <p style="margin:0 0 10px;color:#c9a961;font-size:13px;letter-spacing:3px;text-transform:uppercase;">Detalles</p>
+                  <p style="margin:0 0 8px;color:#fdfbf7;font-size:15px;">📅 Sábado 5 · Septiembre · 2026 · 20:30h</p>
+                  <p style="margin:0 0 8px;color:#fdfbf7;font-size:15px;">📍 Paseo de la Castellana, 134 · 28046 Madrid</p>
+                  <p style="margin:0 0 8px;color:#c8c0b0;font-size:14px;">🚇 Metro: Cuzco (L10)</p>
+                  <p style="margin:12px 0 0;color:#c9a961;font-size:14px;">👔 Dress code: elegante / cocktail</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:0 40px 40px;text-align:center;">
+            <p style="color:#fdfbf7;font-size:18px;margin:0 0 8px;">¡Qué ganas! 🙌</p>
+            <p style="color:#c9a961;font-size:16px;margin:0;font-style:italic;">— Nacho</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="background-color:#0a0c1a;padding:20px 40px;text-align:center;border-top:1px solid rgba(201,169,97,0.2);">
+            <p style="margin:0;color:#6b6560;font-size:12px;">nachoblanch30.com</p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>"""
+            resend.Emails.send({
+                "from": "noreply@nachoblanch30.com",
+                "to": payload.email,
+                "subject": "¡Nos vemos el 5 de Septiembre! 🎉",
+                "html": html_body,
+            })
+        except Exception as e:
+            logger.error(f"Error sending confirmation email: {e}")
+
     return rsvp
 
 
