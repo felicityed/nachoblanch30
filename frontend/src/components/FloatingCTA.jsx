@@ -23,21 +23,18 @@ export default function FloatingCTA({ targetId = "rsvp", hidden = false }) {
   return (
     <AnimatePresence>
       {visible && !hidden && (
-        <motion.div
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 220, damping: 24 }}
-          className="fixed z-50 left-1/2 -translate-x-1/2 bottom-5 sm:bottom-8"
-        >
+        <div className="fixed z-50 left-0 right-0 bottom-5 sm:bottom-8 flex justify-center pointer-events-none">
           <motion.a
             data-testid="floating-cta"
             href={`#${targetId}`}
             onClick={handleClick}
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 24 }}
             whileHover={{ scale: 1.04, y: -2 }}
             whileTap={{ scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="group relative inline-flex items-center gap-3 px-7 sm:px-10 py-4 sm:py-[18px] rounded-full font-sans-body font-medium text-[11px] sm:text-[12px] tracking-[0.32em] uppercase"
+            className="group relative inline-flex items-center gap-3 px-7 sm:px-10 py-4 sm:py-[18px] rounded-full font-sans-body font-medium text-[11px] sm:text-[12px] tracking-[0.32em] uppercase pointer-events-auto"
             style={{
               color: "#0a0e27",
               background:
@@ -74,7 +71,7 @@ export default function FloatingCTA({ targetId = "rsvp", hidden = false }) {
               60%,100% { transform: translateX(200%); }
             }
           `}</style>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   );

@@ -5,9 +5,9 @@ import {
   MapPin,
   Clock,
   CalendarDays,
-  Beer,
   UtensilsCrossed,
   Music2,
+  Camera,
   Sparkles,
   ArrowRight,
   Heart,
@@ -292,9 +292,9 @@ function EventPill({ icon, label, value }) {
 // ---------- ABOUT ----------
 function About() {
   const cards = [
-    { icon: <Beer size={28} strokeWidth={1.2} />, label: "Bebida", value: "Cerveza & vinos" },
-    { icon: <UtensilsCrossed size={28} strokeWidth={1.2} />, label: "Comida", value: "Mejor imposible" },
-    { icon: <Music2 size={28} strokeWidth={1.2} />, label: "Música", value: "DJ en vivo" },
+    { icon: <UtensilsCrossed size={28} strokeWidth={1.2} />, label: "Bebida & Comida", value: "Mejor imposible" },
+    { icon: <Music2 size={28} strokeWidth={1.2} />, label: "Música", value: "Inmejorable" },
+    { icon: <Camera size={28} strokeWidth={1.2} />, label: "Recuerdos", value: "Fotógrafo & Photocall" },
   ];
   return (
     <section className="relative py-28 sm:py-40 px-6" id="celebracion">
